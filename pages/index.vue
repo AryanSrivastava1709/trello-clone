@@ -144,7 +144,8 @@ function saveTask() {
     <v-app>
       <v-app-bar app color="primary" class="shadow-md">
         <v-spacer></v-spacer>
-        <v-toolbar-title class="text-center font-weight-bold font-large"
+        <v-toolbar-title
+          class="text-center font-weight-bold text-sm sm:text-base md:text-lg lg:text-xl"
           >Trello Clone</v-toolbar-title
         >
         <v-spacer></v-spacer>
