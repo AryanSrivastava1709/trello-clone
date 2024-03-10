@@ -108,26 +108,26 @@ function editTask(taskId) {
 }
 function saveTask() {
   // Find the task in the storedTasks array
-  const index = storedTasks.findIndex((task) => task.id === task.id);
+  const index = storedTasks.findIndex(
+    (storedTask) => storedTask.id === task.id
+  );
   if (index === -1) {
     console.error(`No task found with id ${task.id}`);
     return;
   }
 
   // Update the task in the storedTasks array
+  storedTasks[index] = { ...task };
 
   // Update the task in local storage
   let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-  const localStorageIndex = tasks.findIndex((task) => task.id === task.id);
+  const localStorageIndex = tasks.findIndex(
+    (storedTask) => storedTask.id === task.id
+  );
   if (localStorageIndex !== -1) {
     tasks[localStorageIndex] = { ...task };
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }
-
-  // Delete the previous record
-  storedTasks.splice(index, 1);
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-  storedTasks[index] = { ...task };
 
   // Reset the task data and close the modal
   task.id = "";
