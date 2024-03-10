@@ -1,8 +1,10 @@
 h2h2
 <script setup>
+// imports
 import { ref, reactive, computed, watchEffect } from "vue";
 import { v4 as uuidv4 } from "uuid";
 
+//data variables
 const isModalOpen = ref(false);
 let isEditing = ref(false);
 let draggedTaskId = ref(null);
@@ -29,8 +31,13 @@ onMounted(() => {
   storedTasks.push(...tasks);
 });
 
+//methods
 function dragStart(id) {
   draggedTaskId.value = id;
+}
+
+function dragEnd() {
+  draggedTaskId.value = null;
 }
 
 function drop(status) {
@@ -38,7 +45,6 @@ function drop(status) {
     const task = storedTasks.find((task) => task.id === draggedTaskId.value);
     if (task) {
       task.status = status;
-      // Update the task in local storage
       let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
       const localStorageIndex = tasks.findIndex(
         (task) => task.id === draggedTaskId.value
@@ -50,8 +56,9 @@ function drop(status) {
     }
   }
 }
-function dragEnd() {
-  draggedTaskId.value = null;
+
+function openModal() {
+  isModalOpen.value = true;
 }
 
 function createTask() {
@@ -67,10 +74,6 @@ function createTask() {
   task.description = "";
   task.status = "";
   isModalOpen.value = false;
-}
-
-function openModal() {
-  isModalOpen.value = true;
 }
 
 function deleteTask(taskId) {
@@ -89,25 +92,21 @@ function deleteTask(taskId) {
   }
 }
 function editTask(taskId) {
-  // Find the task in the storedTasks array
   const taskToEdit = storedTasks.find((task) => task.id === taskId);
   if (!taskToEdit) {
     console.error(`No task found with id ${taskId}`);
     return;
   }
 
-  // Set the task data to the reactive task object
   task.id = taskToEdit.id;
   task.title = taskToEdit.title;
   task.description = taskToEdit.description;
   task.status = taskToEdit.status;
 
-  // Open the modal and set isEditing to true
   isModalOpen.value = true;
   isEditing.value = true;
 }
 function saveTask() {
-  // Find the task in the storedTasks array
   const index = storedTasks.findIndex(
     (storedTask) => storedTask.id === task.id
   );
@@ -116,10 +115,8 @@ function saveTask() {
     return;
   }
 
-  // Update the task in the storedTasks array
   storedTasks[index] = { ...task };
 
-  // Update the task in local storage
   let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
   const localStorageIndex = tasks.findIndex(
     (storedTask) => storedTask.id === task.id
@@ -129,7 +126,6 @@ function saveTask() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }
 
-  // Reset the task data and close the modal
   task.id = "";
   task.title = "";
   task.description = "";
@@ -169,7 +165,7 @@ function saveTask() {
             </span>
           </h2>
           <div
-            class="border-b-2 border-gray-200"
+            class="border-b-2 border-gray-200 p-5"
             @dragover.prevent
             @drop="drop('not started')"
           >
@@ -213,7 +209,7 @@ function saveTask() {
             </span>
           </h2>
           <div
-            class="border-b-2 border-gray-200"
+            class="border-b-2 border-gray-200 p-5"
             @dragover.prevent
             @drop="drop('in progress')"
           >
@@ -257,7 +253,7 @@ function saveTask() {
             </span>
           </h2>
           <div
-            class="border-b-2 border-gray-200"
+            class="border-b-2 border-gray-200 p-5"
             @dragover.prevent
             @drop="drop('completed')"
           >
