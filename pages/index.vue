@@ -1,4 +1,3 @@
-h2h2
 <script setup>
 // imports
 import { ref, reactive, computed, watchEffect } from "vue";
