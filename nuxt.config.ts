@@ -1,6 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 export default defineNuxtConfig({
+  head: {
+    title: "Trello Clone",
+  },
   devtools: { enabled: true },
   build: {
     transpile: ["vuetify"],
