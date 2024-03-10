@@ -296,7 +296,7 @@ function saveTask() {
       <v-dialog v-model="isModalOpen" class="my-8">
         <div class="flex items-center justify-center my-auto mx-auto">
           <div
-            class="bg-white w-full sm:w-3/4 md:w-1/2 lg:w-[500px] h-auto rounded-lg shadow-md"
+            class="bg-white w-full sm:w-3/4 md:w-80 lg:w-[500px] h-auto rounded-lg shadow-md"
           >
             <div class="px-6 py-4 font-bold text-2xl">
               {{ isEditing ? "Edit Task" : "Create New Task" }}
